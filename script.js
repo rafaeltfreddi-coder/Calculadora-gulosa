@@ -1,114 +1,121 @@
-números e devolve o resultado.
-    function somar(a, b) {
-      return a + b;
-    }
+* {
+    box-sizing: border-box;
+}
 
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #10172a, #253b68);
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-    function subtrair(a, b) {
-      return a - b;
-    }
+.calculadora {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    padding: 32px;
+    border-radius: 24px;
+    box-shadow: 0 20px 50px #00000040;
+}
 
+.icone {
+    width: 55px;
+    height: 55px;
+    margin: 0 auto 15px;
+    background: #e8edff;
+    color: #3158c9;
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+    font-size: 30px;
+}
 
-    function multiplicar(a, b) {
-      return a * b;
-    }
+h1 {
+    text-align: center;
+    color: #17233f;
+    margin-bottom: 8px;
+}
 
+.subtitulo {
+    text-align: center;
+    color: #788198;
+    margin-bottom: 28px;
+}
 
-    function dividir(a, b) {
-      return a / b;
-    }
+label {
+    display: block;
+    margin: 18px 0 8px;
+    color: #34415c;
+    font-weight: bold;
+    font-size: 14px;
+}
 
+input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #dce2ef;
+    border-radius: 12px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.2s;
+}
 
-    // Esta função lê os campos, escolhe a operação
-    // e apresenta o resultado no HTML.
-    function calcular(operacao) {
-      // 1. Localiza os campos e o parágrafo de resultado.
-      const campo1 = document.getElementById("numero1");
-      const campo2 = document.getElementById("numero2");
-      const textoResultado = document.getElementById("resultado");
+input:focus {
+    border-color: #4169e1;
+    box-shadow: 0 0 0 3px #4169e122;
+}
 
+.operacoes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 24px;
+}
 
-      // 2. Verifica se algum campo está vazio.
-      if (campo1.value === "" || campo2.value === "") {
-        textoResultado.textContent = "Preencha os dois números.";
-        return; // Encerra a função sem realizar o cálculo.
-      }
+button {
+    padding: 14px 8px;
+    border: none;
+    border-radius: 12px;
+    background: #3158c9;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
 
+button:hover {
+    background: #203f9e;
+    transform: translateY(-2px);
+}
 
-      // 3. Obtém os valores dos campos como números.
-      const numero1 = campo1.valueAsNumber;
-      const numero2 = campo2.valueAsNumber;
+button:active {
+    transform: scale(0.97);
+}
 
+.painel-resultado {
+    margin-top: 25px;
+    padding: 18px;
+    background: #f2f5fc;
+    border-radius: 14px;
+    text-align: center;
+}
 
-      // 4. Confere se os dois valores são números válidos.
-      if (!Number.isFinite(numero1) || !Number.isFinite(numero2)) {
-        textoResultado.textContent = "Digite números válidos.";
-        return;
-      }
+.painel-resultado span {
+    color: #7b87a1;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
 
-
-      let resultado;
-      let simbolo;
-
-
-      // 5. Chama a função correspondente à operação escolhida.
-      switch (operacao) {
-        case "somar":
-          resultado = somar(numero1, numero2);
-          simbolo = "+";
-          break;
-
-
-        case "subtrair":
-          resultado = subtrair(numero1, numero2);
-          simbolo = "−";
-          break;
-
-
-        case "multiplicar":
-          resultado = multiplicar(numero1, numero2);
-          simbolo = "×";
-          break;
-
-
-        case "dividir":
-          // A divisão por zero não será permitida.
-          if (numero2 === 0) {
-            textoResultado.textContent = "Não é possível dividir por zero.";
-            return;
-          }
-
-
-          resultado = dividir(numero1, numero2);
-          simbolo = "÷";
-          break;
-
-
-        default:
-          textoResultado.textContent = "Operação inválida.";
-          return;
-      }
-
-
-      // 6. Verifica se o cálculo ultrapassou o limite numérico.
-      if (!Number.isFinite(resultado)) {
-        textoResultado.textContent = "O resultado ultrapassou o limite numérico.";
-        return;
-      }
-
-
-      // 7. Formata o resultado para apresentação em português.
-      const resultadoFormatado = resultado.toLocaleString("pt-BR", {
-        maximumFractionDigits: 10
-      });
-
-
-      // 8. Exibe a conta e o resultado no parágrafo do HTML.
-      textoResultado.textContent =
-        `${numero1.toLocaleString("pt-BR")} ${simbolo} ` +
-        `${numero2.toLocaleString("pt-BR")} = ${resultadoFormatado}`;
-    }
-
-
-
-
+#resultado {
+    color: #203f9e;
+    font-size: 18px;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+    margin: 12px 0 0;
+        }
