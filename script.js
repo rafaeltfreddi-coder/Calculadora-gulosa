@@ -1,3 +1,5 @@
+"use strict";
+
 // Operações matemáticas
 function somar(a, b) {
     return a + b;
@@ -15,21 +17,21 @@ function dividir(a, b) {
     return a / b;
 }
 
-// Realiza o cálculo e exibe o resultado
+// Formata números no padrão brasileiro
+function formatar(numero) {
+    return numero.toLocaleString("pt-BR", {
+        maximumFractionDigits: 10
+    });
+}
+
+// Realiza o cálculo
 function calcular(operacao) {
     const campo1 = document.getElementById("numero1");
     const campo2 = document.getElementById("numero2");
     const textoResultado = document.getElementById("resultado");
 
-    // Verifica se os elementos existem
-    if (!campo1 || !campo2 || !textoResultado) {
-        console.error("Erro: elementos HTML não encontrados.");
-        return;
-    }
-
-    // Valida os campos
     if (campo1.value.trim() === "" || campo2.value.trim() === "") {
-        textoResultado.textContent = "⚠️ Preencha os dois números.";
+        textoResultado.textContent = "Preencha os dois números.";
         return;
     }
 
@@ -37,14 +39,13 @@ function calcular(operacao) {
     const b = campo2.valueAsNumber;
 
     if (!Number.isFinite(a) || !Number.isFinite(b)) {
-        textoResultado.textContent = "⚠️ Digite números válidos.";
+        textoResultado.textContent = "Digite números válidos.";
         return;
     }
 
     let resultado;
     let simbolo;
 
-    // Escolhe a operação
     switch (operacao) {
         case "somar":
             resultado = somar(a, b);
@@ -64,7 +65,7 @@ function calcular(operacao) {
         case "dividir":
             if (b === 0) {
                 textoResultado.textContent =
-                    "⚠️ Não é possível dividir por zero.";
+                    "Não é possível dividir por zero.";
                 return;
             }
 
@@ -73,26 +74,37 @@ function calcular(operacao) {
             break;
 
         default:
-            textoResultado.textContent = "⚠️ Operação inválida.";
+            textoResultado.textContent = "Operação inválida.";
             return;
     }
 
-    // Confere o resultado
     if (!Number.isFinite(resultado)) {
-        textoResultado.textContent = "⚠️ Resultado inválido.";
+        textoResultado.textContent = "Resultado fora do limite numérico.";
         return;
     }
 
-    // Formata os números em português
-    const formatar = (numero) =>
-        numero.toLocaleString("pt-BR", {
-            maximumFractionDigits: 10
-        });
-
-    // Mostra a conta na página
     textoResultado.textContent =
         `${formatar(a)} ${simbolo} ${formatar(b)} = ${formatar(resultado)}`;
 }
 
-// Confirma que o JavaScript foi carregado
-console.log("Calculadora carregada com sucesso!");
+// Configura os botões quando a página carrega
+document.addEventListener("DOMContentLoaded", function () {
+    const botoes = document.querySelectorAll("[data-operacao]");
+    const campo1 = document.getElementById("numero1");
+    const campo2 = document.getElementById("numero2");
+    const textoResultado = document.getElementById("resultado");
+    const botaoLimpar = document.getElementById("limpar");
+
+    botoes.forEach(function (botao) {
+        botao.addEventListener("click", function () {
+            calcular(botao.dataset.operacao);
+        });
+    });
+
+    botaoLimpar.addEventListener("click", function () {
+        campo1.value = "";
+        campo2.value = "";
+        textoResultado.textContent = "O resultado aparecerá aqui.";
+        campo1.focus();
+    });
+});
